@@ -1,8 +1,53 @@
-# SlidingDrawer
-简洁易用的抽屉效果,一如既往的详细注解
-## 主要代码的实现
+//
+//  DragerViewController.m
+//  抽屉效果
+//
+//  Created by 初七 on 2016/12/27.
+//  Copyright © 2016年 nemo. All rights reserved.
+//
 
-```
+#import "DragerViewController.h"
+
+#define screenW [UIScreen mainScreen].bounds.size.width
+
+@interface DragerViewController ()
+
+/** 左视图 */
+@property (nonatomic, weak)  UIView *leftV;
+/** 右视图 */
+@property (nonatomic, weak)  UIView *rightV;
+/** 主视图 */
+@property (nonatomic, weak)  UIView *mainV;
+
+@end
+
+@implementation DragerViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    //添加子控件
+    [self setUp];
+    
+    //添加手势
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+    [self.mainV addGestureRecognizer:pan];
+    
+    //给控制器的View添加点按手势
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap)];
+    [self.view addGestureRecognizer:tap];
+}
+#pragma mark - 点击任意位置复位
+- (void)tap{
+    
+    //让MainV复位
+    [UIView animateWithDuration:0.5 animations:^{
+        self.mainV.frame = self.view.bounds;
+    }];
+}
+
+#define targetR 275 // 根据自己的需要设置大小
+#define targetL -275
 #pragma mark - 拖动事件
 - (void)pan:(UIPanGestureRecognizer *)pan{
     
@@ -48,9 +93,8 @@
     [pan setTranslation:CGPointZero inView:self.mainV];
     
 }
-```
 
-```
+#define maxY 100
 #pragma mark - 根据偏移量计算MainV的frame
 - (CGRect)frameWithOffsetX:(CGFloat)offsetX {
     
@@ -72,6 +116,24 @@
     
     return frame;
 }
+#pragma mark - 设置子控件
+- (void)setUp{
+    
+    //leftV
+    UIView *leftV = [[UIView alloc] initWithFrame:self.view.bounds];
+    leftV.backgroundColor = [UIColor blueColor];
+    self.leftV = leftV;
+    [self.view addSubview:leftV];
+    //rightV
+    UIView *rightV = [[UIView alloc] initWithFrame:self.view.bounds];
+    rightV.backgroundColor = [UIColor greenColor];
+    self.rightV = rightV;
+    [self.view addSubview:rightV];
+    //mianV
+    UIView *mainV = [[UIView alloc] initWithFrame:self.view.bounds];
+    mainV.backgroundColor = [UIColor redColor];
+    self.mainV = mainV;
+    [self.view addSubview:mainV];
+}
 
-```
-
+@end
