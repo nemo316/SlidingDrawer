@@ -49,7 +49,6 @@
     
 }
 ```
-
 ```
 #pragma mark - 根据偏移量计算MainV的frame
 - (CGRect)frameWithOffsetX:(CGFloat)offsetX {
